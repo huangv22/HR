@@ -1,0 +1,89 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Chatbuilder</title>
+    <script src="http://chatbuilder.hackreactor.com/ChatBuilder.js"></script> 
+    <!-- <script src="http://code.jquery.com/jquery-1.10.2.js"></script> -->
+  </head>
+  <body>
+
+    <script>
+    // delete Chat.display;
+    // delete Chat.fetch;
+
+
+        // Chat.guide.start();
+        Chat.guide(9);
+        Chat.guide(10);
+      
+     
+
+
+      /*  8. Replace Chat.display.
+      Transform the message string being passed in into some appropriate HTML.
+      Add the new html you made into the page, as a child of the messages container node. */
+
+      function showMessages(messageList) {
+       $('.messages').empty();
+        for (msg in messageList) {
+          $('.messages').append('<li>' + messageList[msg]);
+        };
+      };
+
+      setInterval(function(){Chat.fetch(showMessages);},3000);
+      
+      /*
+      5. Experiment with the  Chat.send()  helper
+      6. Allow the user to enter their own chat messages via the input box. */
+      $(document).ready(function(){
+        $('button').click(function() {
+          var userInput = $('.draft').val();
+          Chat.send(userInput);
+        });
+      });
+
+      
+      /* 9. Add  delete Chat.fetch;  as the second line of your JS.*/
+      function chatFetch(showMessages) {
+         $.get("https://api.parse.com/1/classes/chats", function(mesgList) {
+
+          console.log(mesgList.results[1]);
+          // Print out the text from the second array
+          // console.log(mesgList.results[1].text);
+
+          // Count the total number of objects in the array
+          var numberOfMessages = mesgList.results.length;
+          // Save the messages into an array (save created and text)
+          var chatMessages = [];
+          for (i = 0; i < numberOfMessages; i++){
+            chatMessages[i] = [mesgList.results[i].createdAt, mesgList.results[i].text] 
+          };
+
+          // Sort the messages into chronological order
+          chatMessages.sort;
+          // console.log(chatMessages);
+          // return all the text fields in the chat field
+
+
+        });
+      };
+      /* 10. Add  delete Chat.send;  as the third line of your JS. */
+      function chatSend(userInput) {
+          $.put("https://api.parse.com/1/classes/chats",userInput);
+        };
+  
+
+    </script>
+
+    <h2>Borken Chat</h2>
+
+    <input class="draft" type="text"/> <button class="send">Send</button>
+
+    <ul class="messages"></ul>
+
+
+  </body>
+</html>
+
