@@ -27,11 +27,12 @@
        $('.messages').empty();
         for (msg in messageList) {
           $('.messages').append('<li>' + messageList[msg]);
+          console.log(messageList[1]);
         };
       };
 
       // Refresh the list in 3 second intervals
-      setInterval(function(){Chat.fetch(chatDisplay);},3000);
+      // setInterval(function(){Chat.fetch(chatDisplay);},3000);
       
       /*
       5. Experiment with the  Chat.send()  helper
@@ -55,21 +56,37 @@
 
           // Count the total number of objects in the array
           var numberOfMessages = mesgList.results.length;
-          // console.log("Nubmer of Messages= " + numberOfMessages);
+          // console.log("Number of Messages = " + numberOfMessages);
 
-          // Save the messages into an array (save created and text)
+          // HACK: Save the messages into an array (save created and text)
           /*
           var chatMessages = [];
           for (i = 0; i < numberOfMessages; i++){
             chatMessages[i] = [mesgList.results[i].createdAt, mesgList.results[i].text] 
           };
+          
+          // Test the array
+          console.log("chatMessages 1,1:" + chatMessages[2,0]);
+
           */
 
           // Sort the messages into chronological order
+          // console.log("The 1st messages is out of " + numberOfMessages + " is: " + mesgList.results[0].text);
+          var msgQ = [];
+          
+          for (i = 0; i < numberOfMessages; i++) {
+            msgQ[i] = mesgList.results[i].text;
+            // console.log(msgQ[i]);
+          }
+
+          /* old code
           chatMessages.sort;
           console.log(chatMessages);
-          console.log(chatMesages[1])
+          console.log(chatMesages[1])*/
+
           // return all the text fields in the chat field
+          console.log(msgQ)
+          return msgQ;
 
 
         });
