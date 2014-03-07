@@ -34,13 +34,27 @@
       // Refresh the list in 3 second intervals
       // setInterval(function(){Chat.fetch(chatDisplay);},3000);
       
+      
+      // Get the user's name
+      var userName = location.search.slice(12);
+      // console.log(userName);
+
+
+
       /*
-      5. Experiment with the  Chat.send()  helper
-      6. Allow the user to enter their own chat messages via the input box. */
+      Allow the user to enter their own chat messages via the input box. */
       $(document).ready(function(){
         $('button').click(function() {
+          $.post(
+            "https://api.parse.com/1/classes/chats",
+            JSON.stringify({
+              text: userName + ": " + $('input.draft').val()
+            }));
+          
+          /* OLD CODE
           var userInput = $('.draft').val();
           Chat.send(userInput);
+          */
         });
       });
 
@@ -91,10 +105,21 @@
 
         });
       };
-      /* 10. Add  delete Chat.send;  as the third line of your JS. */
+
+      /* 10. Add  delete Chat.send; */
+      /* Test Parse Post with AJAX*/ 
+      /*
       function chatSend(userInput) {
-          $.put("https://api.parse.com/1/classes/chats",userInput);
-        };
+        console.log(userInput);
+          
+          // The jqXHR method
+           
+          $.post("https://api.parse.com/1/classes/chats", 
+            JSON.stringify({
+              text: "Phil: " + userInput
+            }));
+      };
+      */
   
 
     </script>
@@ -108,4 +133,3 @@
 
   </body>
 </html>
-
