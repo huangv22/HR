@@ -10,39 +10,26 @@
 
     <script>
     delete Chat.display;
-    // delete Chat.fetch;
+    delete Chat.fetch;
+    delete Chat.send;
 
     /* Chat Guides */ 
     // Chat.guide.start();
-    Chat.guide(8);
-    Chat.guide(9);
-    Chat.guide(10);
+    // Chat.guide(8);
+    // Chat.guide(9);
+    // Chat.guide(10);
 
-      /*  
-      8. Replace Chat.display. --> showMessages
-      Transform the message string being passed in into some appropriate HTML.
-      Add the new html you made into the page, as a child of the messages container node.*/
-
-      function chatDisplay(messageList) {
-       $('.messages').empty();
-        for (msg in messageList) {
-          $('.messages').append('<li>' + messageList[msg]);
-          console.log(messageList[1]);
-        };
-      };
-
+      
       // Refresh the list in 3 second intervals
-      // setInterval(function(){Chat.fetch(chatDisplay);},3000);
+      setInterval(function(){chatFetch();},3000);
       
       
       // Get the user's name
       var userName = location.search.slice(12);
       // console.log(userName);
 
-
-
-      /*
-      Allow the user to enter their own chat messages via the input box. */
+      /*      Send message onclick to Parse      */
+      
       $(document).ready(function(){
         $('button').click(function() {
           $.post(
@@ -60,51 +47,27 @@
 
       
       /* 9. Add  delete Chat.fetch; as the second line of your JS.*/
-      function chatFetch(chatDisplay) {
-         $.get("https://api.parse.com/1/classes/chats", function(mesgList) {
+      function chatFetch() {
+         $.get("https://api.parse.com/1/classes/chats?order=createdAt", function(mesgList) {
 
-          // Print out the second array
-          // console.log(mesgList.results[1]);
-          // Print out the text from the second array
-          // console.log(mesgList.results[1].text);
 
           // Count the total number of objects in the array
           var numberOfMessages = mesgList.results.length;
+
           // console.log("Number of Messages = " + numberOfMessages);
-
-          // HACK: Save the messages into an array (save created and text)
-          /*
-          var chatMessages = [];
-          for (i = 0; i < numberOfMessages; i++){
-            chatMessages[i] = [mesgList.results[i].createdAt, mesgList.results[i].text] 
-          };
-          
-          // Test the array
-          console.log("chatMessages 1,1:" + chatMessages[2,0]);
-
-          */
 
           // Sort the messages into chronological order
           // console.log("The 1st messages is out of " + numberOfMessages + " is: " + mesgList.results[0].text);
+          $('.messages').empty();
           var msgQ = [];
-          
+
           for (i = 0; i < numberOfMessages; i++) {
             msgQ[i] = mesgList.results[i].text;
-            // console.log(msgQ[i]);
+            $('.messages').append('<li>' + msgQ[i]);
           }
-
-          /* old code
-          chatMessages.sort;
-          console.log(chatMessages);
-          console.log(chatMesages[1])*/
-
-          // return all the text fields in the chat field
-          console.log(msgQ)
-          return msgQ;
-
-
         });
       };
+      
 
       /* 10. Add  delete Chat.send; */
       /* Test Parse Post with AJAX*/ 
